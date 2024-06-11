@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +20,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatButtonModule,
     MatInputModule,
     MatDatepickerModule,
-    FormsModule,MatProgressBarModule,
+    FormsModule,MatProgressBarModule,CommonModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './dialog-add-user.component.html',
