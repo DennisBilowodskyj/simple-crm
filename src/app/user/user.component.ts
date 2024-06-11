@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Firestore, collection } from '@angular/fire/firestore';
 import { onSnapshot, QuerySnapshot, DocumentData } from 'firebase/firestore';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -19,7 +20,7 @@ import { CommonModule } from '@angular/common';
     MatTooltipModule,
     MatDialogModule,
     MatCardModule,
-    CommonModule
+    CommonModule,RouterLink
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
@@ -36,7 +37,10 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     const usersCollection = collection(this.firestore, 'users');
     onSnapshot(usersCollection, (snapshot: QuerySnapshot<DocumentData>) => {
-      const changes = snapshot.docs.map((doc) => doc.data());
+      const changes = snapshot.docs.map((doc) => ({
+        data:doc.data(),
+        customerId: doc.id        
+      }));
       console.log('recieved changes from', changes);
       this.allUsers = changes;
     });
