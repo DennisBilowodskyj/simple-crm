@@ -20,7 +20,8 @@ import { RouterLink } from '@angular/router';
     MatTooltipModule,
     MatDialogModule,
     MatCardModule,
-    CommonModule,RouterLink
+    CommonModule,
+    RouterLink,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
@@ -38,10 +39,11 @@ export class UserComponent implements OnInit {
     const usersCollection = collection(this.firestore, 'users');
     onSnapshot(usersCollection, (snapshot: QuerySnapshot<DocumentData>) => {
       const changes = snapshot.docs.map((doc) => ({
-        data:doc.data(),
-        customerId: doc.id        
+        ...doc.data(),
+        customerId: doc.id,
       }));
       console.log('recieved changes from', changes);
+
       this.allUsers = changes;
     });
   }
