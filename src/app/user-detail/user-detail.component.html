@@ -1,4 +1,13 @@
 <mat-card class="user-detail-header">
+  <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="userMenu">
+    <mat-icon class="icon"  fontIcon="more_vert"></mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="editUserDetail()">Edit</button>
+  </mat-menu>
+
+
   <img src="./../../assets/img/1.webp" />
   <div class="user-details">
     <h2>Max Mustermann</h2>
@@ -7,11 +16,19 @@
 </mat-card>
 
 <mat-card class="mt-32">
+  <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menu">
+  <mat-icon class="icon"  fontIcon="more_vert"></mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="editMenu()">Edit</button>
+</mat-menu>
   <mat-card-header>
+
     <mat-card-title>Address</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    Musterstr. 23 <br>
+    Musterstr. 23 <br />
     12345 Musterstadt
   </mat-card-content>
 </mat-card>
