@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 @Component({
   selector: 'app-dialog-edit-adress',
   standalone: true,
@@ -25,10 +25,26 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   styleUrl: './dialog-edit-adress.component.scss',
 })
 export class DialogEditAdressComponent {
-  loading: any;
+  loading = false;
+  firestore: Firestore = inject(Firestore);
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {}
 
-  user = new User();
+  user!: User;
+  userId!: string;
 
-  saveUser() {}
-}
+  async saveUser() {
+    this.loading = true;
+    const usersCollection = collection(this.firestore, 'users');
+    try {
+      const userDocRef  = doc(usersCollection, this.userId); 
+    await updateDoc(userDocRef , { ...this.user });
+      this.loading = false;
+      console.log('adding user finished', userDocRef );
+      this.dialogRef.close();
+    } catch (error) {
+      console.error('Error adding user: ', error);
+    }
+    
+  }
+  }
+
